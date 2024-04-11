@@ -61,14 +61,12 @@ with pd.ExcelWriter(excel_file, engine='openpyxl') as writer:
     workbook = writer.book
     worksheet = writer.sheets["Sheet1"]
     header_font = Font(bold=True, size=14)
-    cell_font = Font(size=12)
-    fill_header = PatternFill(start_color='98FB98', end_color='98FB98', fill_type='solid')
+    cell_font = Font(bold=True, size=12)  # 모든 셀의 글꼴을 굵게 설정
 
     # 역할 열의 너비 설정
-    worksheet.column_dimensions["A"].width = 24
+    worksheet.column_dimensions["A"].width = 40
     # 이름 열의 너비 설정
-    worksheet.column_dimensions["B"].width = 10
-    # 각 셀의 높이를 늘림
+    worksheet.column_dimensions["B"].width = 18
 
     # C1과 D1에 "1주"와 "2주" 입력 및 색 입히기
     for col_letter, week in zip(["C", "D"], ["1주", "2주"]):
@@ -86,7 +84,8 @@ with pd.ExcelWriter(excel_file, engine='openpyxl') as writer:
         for cell in row:
             cell.border = border
             # 각 셀의 높이를 늘림
-            cell.alignment = Alignment(wrap_text=True, vertical='center')
-            worksheet.row_dimensions[cell.row].height = 24  # 높이 설정
+            cell.alignment = Alignment(wrap_text=True, horizontal='center', vertical='center')
+            worksheet.row_dimensions[cell.row].height = 40  # 높이 설정
+            cell.font = cell_font  # 모든 셀의 글꼴을 굵게 설정
 
 print("엑셀 파일이 성공적으로 생성되었습니다.")
